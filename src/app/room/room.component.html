@@ -2,13 +2,11 @@
 <div class="login-page">
   <div class="form">
       <form class="login-form">
+          <h5>Create a new room</h5>
           <p *ngIf="errMsg !== null" style="color: red">
               {{errMsg}}
           </p>
           <button (click)="CreateChatRoom()">Create room</button>
       </form>
   </div>
-</div>
-<div>
-  login: {{login}}
 </div>

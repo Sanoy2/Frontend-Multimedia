@@ -18,8 +18,8 @@ export class LoginService {
 
     Register(form: LoginForm, onSuccess, onError) {
         this.http.post('http://localhost:8000/login', form, this.httpOptions).subscribe(
-            succcess => {
-                onSuccess(succcess)
+            success => {
+                onSuccess(success)
             }, error => {
                 onError(error)
             }

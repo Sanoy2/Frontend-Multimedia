@@ -17,8 +17,8 @@ export class RegisterService {
 
     Register(form: RegistrationForm, onSuccess, onError) {
         this.http.post('http://localhost:8000/register', form, this.httpOptions).subscribe(
-            succcess => {
-                onSuccess(succcess)
+            success => {
+                onSuccess(success)
             }, error => {
                 onError(error)
             }

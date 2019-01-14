@@ -14,16 +14,18 @@ import { RoomComponent } from './room/room.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterService } from './register/service/register.service';
 import { LoginService } from './login/service/login.service';
+import { RoomService } from './room/service/room.service';
+import { ChatService } from './chat/service/chat.service';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'Login', component: LoginComponent },
-  { path: 'Register', component: RegisterComponent },
-  { path: 'Room', component: RoomComponent },
-  { path: 'Chat/:id', component: ChatComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'room', component: RoomComponent },
+  { path: 'chat', redirectTo: '/room', pathMatch: 'full' },
+  { path: 'chat/:room_gid', component: ChatComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
-
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ const appRoutes: Routes = [
   providers: [
     CookieService,
     RegisterService,
-    LoginService],
+    LoginService,
+    RoomService,
+    ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

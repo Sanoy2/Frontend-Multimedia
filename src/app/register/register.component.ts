@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     this.service.Register(this.form,
       response => {
         if (response.ok === true) {
-          this.router.navigate(['/Login'])
+          this.router.navigate(['/login']);
         }
         else {
           this.errMsg = response.error.message;

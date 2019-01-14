@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginForm } from '../models/LoginForm';
-import {LoginService } from './service/login.service'
+import { LoginService } from './service/login.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         if (response.ok === true) {
           this.cookieService.set('username', response.data.username);
           this.cookieService.set('uuid', response.data.uuid);
-          this.router.navigate(['/Room'])
+          this.router.navigate(['/room'])
         }
         else {
           this.errMsg = response.error.message;
