@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -7,17 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   ngOnInit() {
   }
 
-  login = '';
-  password = '';
-  errMsg = null;
+  login: string = '';
+  password: string = '';
+  errMsg: string = null;
 
   Login() {
-    this.errMsg = 'Error error error';
+    this.cookieService.set('login', this.login);
   }
 
 }

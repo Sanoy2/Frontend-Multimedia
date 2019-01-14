@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { MyNavbarComponent } from './my-navbar/my-navbar.component';
@@ -14,9 +15,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'Login', component: LoginComponent },
-  { path: 'Register',      component: RegisterComponent },
-  { path: 'Room',      component: RoomComponent },
-  { path: 'Chat/:id',      component: ChatComponent },
+  { path: 'Register', component: RegisterComponent },
+  { path: 'Room', component: RoomComponent },
+  { path: 'Chat/:id', component: ChatComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -39,7 +40,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes: true
     )
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

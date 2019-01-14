@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-room',
@@ -7,14 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   ngOnInit() {
   }
 
+  login: string = null;
+  errMsg = 'Sorry, an error occurred. Try again later.';
   errMsg = null;
   CreateChatRoom() {
-    this.errMsg = 'Sorry, an error occurred. Try again later.';
+    this.login = this.cookieService.get('login');
   }
 
 }
