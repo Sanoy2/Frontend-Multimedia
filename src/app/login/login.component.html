@@ -1,0 +1,22 @@
+<app-my-navbar></app-my-navbar>
+<!-- address : {{address}} -->
+<div class="login-page">
+    <div class="form">
+        <div class="login-form">
+            <input type="text" placeholder="username" [(ngModel)]="login" />
+            <input type="password" placeholder="password" [(ngModel)]="password" />
+            <p *ngIf="errMsg !== null" style="color: red;font-size: 12px;">{{errMsg}}</p>
+
+            <button (click)="Login()">login</button>
+            <p class="message">Not registered? <a class="nav-link" routerLink="/Register" routerLinkActive="active">Create
+              an account</a></p>
+            </div>
+    </div>
+</div>
+
+<div>
+    <ul>
+        login: {{login}}<br />
+        password: {{password}}<br />
+    </ul>
+</div>

@@ -1,0 +1,11 @@
+<app-my-navbar></app-my-navbar>
+<div class="login-page">
+  <div class="form">
+      <form class="login-form">
+          <p *ngIf="errMsg !== null" style="color: red">
+              {{errMsg}}
+          </p>
+          <button (click)="CreateChatRoom()">Create room</button>
+      </form>
+  </div>
+</div>
