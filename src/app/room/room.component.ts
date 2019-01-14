@@ -14,7 +14,6 @@ export class RoomComponent implements OnInit {
   }
 
   login: string = null;
-  errMsg = 'Sorry, an error occurred. Try again later.';
   errMsg = null;
   CreateChatRoom() {
     this.login = this.cookieService.get('login');

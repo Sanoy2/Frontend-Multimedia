@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MyNavbarComponent } from './my-navbar/my-navbar.component';
@@ -11,6 +12,8 @@ import { RegisterComponent } from './register/register.component';
 import { ChatComponent } from './chat/chat.component';
 import { RoomComponent } from './room/room.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RegisterService } from './register/service/register.service';
+import { LoginService } from './login/service/login.service';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -37,10 +40,14 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes: true
-    )
+      { enableTracing: false } // <-- debugging purposes: true
+    ),
+    HttpClientModule
   ],
-  providers: [CookieService],
+  providers: [
+    CookieService,
+    RegisterService,
+    LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

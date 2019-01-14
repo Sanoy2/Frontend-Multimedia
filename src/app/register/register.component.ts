@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { RegistrationForm } from '../models/RegistrationForm';
+import { RegisterService } from './service/register.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -8,18 +10,35 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: RegisterService, private router: Router) { }
 
   ngOnInit() {
   }
+
+  form = new RegistrationForm();
 
   username = '';
   login = '';
   password = '';
   rePassword = '';
-  errMsg:string = null;
+  errMsg: string = null;
 
   Register() {
-    this.errMsg = 'Error error error';
+    this.form.login = this.login;
+    this.form.username = this.username;
+    this.form.password = this.password;
+    this.service.Register(this.form,
+      response => {
+        if (response.ok === true) {
+          this.router.navigate(['/Login'])
+        }
+        else {
+          this.errMsg = response.error.message;
+        }
+      },
+      error => {
+        this.errMsg = error.message;
+      }
+    )
   }
 }
