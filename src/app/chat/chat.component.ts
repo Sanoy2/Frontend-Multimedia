@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from './service/chat.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Message } from '../models/message';
+import { MessageForm } from '../models/MessageForm';
 
 @Component({
   selector: 'app-chat',
@@ -35,7 +37,7 @@ export class ChatComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    if(!this.room_gid){
+    if (!this.room_gid) {
       this.router.navigate(['/room']);
     }
   }

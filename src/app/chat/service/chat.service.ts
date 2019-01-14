@@ -1,31 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Message } from '../../models/message';
+import { MessageForm } from '../../models/MessageForm';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class ChatService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private cookieService: CookieService) {
 
     }
 
-    // GetHttpOptions(uuid: string) {
-    //     let httpOptions = {
-    //         headers: new HttpHeaders({
-    //             'Content-Type': 'application/json',
-    //             'authorization' : uuid
-    //         })
-    //     };
-    //     return httpOptions;
-    // }   
+    GetHttpOptions(uuid: string) {
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': uuid
+            })
+        };
+        return httpOptions;
+    }
 
-    // Register(form: LoginForm, onSuccess, onError) {
-    //     this.http.post('http://localhost:8000/login', form, this.httpOptions).subscribe(
-    //         success => {
-    //             onSuccess(success)
-    //         }, error => {
-    //             onError(error)
-    //         }
-    //     )
-    // };
+    GetMessages(room_gid: string, onSuccess, onError) {
+        let uuid = this.cookieService.get('uuid');
+        let path: string = 'http://localhost:8000' + '/get-room-history?room_gid' + room_gid;
+        this.http.get(path, this.GetHttpOptions(uuid)).subscribe(
+            success => {
+                onSuccess(success)
+            }, error => {
+                onError(error)
+            }
+        );
+    }
+
+    SendMessage(messageForm: MessageForm, onSuccess, onError) {
+        let uuid = this.cookieService.get('uuid');
+        let path: string = 'http://localhost:8000/send-message';
+        this.http.post(path, messageForm, this.GetHttpOptions(uuid)).subscribe(
+            success => {
+                onSuccess(success)
+            }, error => {
+                onError(error)
+            }
+        )
+    };
 }
