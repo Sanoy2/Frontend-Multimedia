@@ -1,12 +1,20 @@
 <app-my-navbar></app-my-navbar>
 <div class="login-page">
   <div class="form">
-      <form class="login-form">
-          <h5>Create a new room</h5>
-          <p *ngIf="errMsg !== null" style="color: red">
-              {{errMsg}}
-          </p>
-          <button (click)="CreateChatRoom()">Create room</button>
-      </form>
+    <form class="login-form">
+      <h5>Create a new room</h5>
+      <p *ngIf="errMsg !== null" style="color: red">
+        {{errMsg}}
+      </p>
+      <button (click)="CreateChatRoom()">Create room</button>
+    </form>
+  </div>
+  <div class="form">
+    <div class="login-form">
+      <h5>..or paste a link to existing one</h5>
+      <input type="search" placeholder="paste a link to room here" [(ngModel)]="chatUrl">
+      <button (click)="Go()">Go</button>
+    </div>
   </div>
 </div>
+

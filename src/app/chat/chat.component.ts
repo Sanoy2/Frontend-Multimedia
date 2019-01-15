@@ -44,15 +44,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     this.GetAllMessages();
-    this.ClearInput();
+    this.messageForm = new MessageForm();
+    this.messageForm.room_gid = this.room_gid;
   }
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   ngAfterViewChecked(): void {
-    this.scrollToBottom();
+    this.ScrollToBottom();
   }
 
-  scrollToBottom(): void {
+  ScrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
@@ -75,8 +76,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.GetAllMessages();
   }
 
-  RollDown() {
-
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.Send();
+    }
   }
 
   GetAllMessages() {
@@ -91,50 +94,30 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             message.time = new Date(response.data[i].msg.timestamp);
             this.bunchOfMessages.push(message);
           }
-          this.bunchOfMessages = this.bunchOfMessages.reverse();
+          this.SortMessages();
         }
         else {
-          this.errMsg = response.error.message;
+          this.router.navigate(['/room']);
         }
       },
       error => {
-        this.errMsg = error.message;
+        this.router.navigate(['/room']);
       }
     )
-    this.RollDown();
-    this.ClearInput();
   }
 
-  AddMessage() {
-    let message = new Message();
-    message.username = this.getUsername();
-    message.content = this.RandomText();
-    message.time = new Date();
-    this.bunchOfMessages.push(message);
+  SortMessages() {
+    this.bunchOfMessages = this.bunchOfMessages.sort((leftSide, rightSide): number => {
+      if (leftSide.time.getTime() < rightSide.time.getTime()) return -1;
+      if (leftSide.time.getTime() > rightSide.time.getTime()) return 1;
+      return 0;
+    });
   }
 
   ClearInput() {
-    this.messageForm = new MessageForm();
-    this.messageForm.room_gid = this.room_gid;
-  }
-
-  RandomText() {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < 5; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-  }
-
-  getUsername() {
-    let a = Math.floor(Math.random() * Math.floor(2));
-    if (a > 0) {
-      return 'abc';
-    }
-    else {
-      return 'theMan';
-    }
+    setTimeout(() => {
+      this.messageForm = new MessageForm();
+      this.messageForm.room_gid = this.room_gid;
+    }, 50);
   }
 }

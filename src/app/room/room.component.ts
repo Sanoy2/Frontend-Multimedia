@@ -16,13 +16,13 @@ export class RoomComponent implements OnInit {
   ngOnInit() {
     this.uuid = this.cookieService.get('uuid');
     if (!this.uuid) {
-      // this.router.navigate(['/Login']);
       this.errMsg = 'Log in to create rooms';
     }
   }
 
   uuid: string = null;
   errMsg = null;
+  chatUrl: string = null;
 
   CreateChatRoom() {
     this.service.CreateRoom(this.uuid,
@@ -41,4 +41,9 @@ export class RoomComponent implements OnInit {
       })
   }
 
+  Go() {
+    let splits = this.chatUrl.split('/');
+    let chatUrl = splits[splits.length - 1];
+    this.router.navigate(['/chat/' + chatUrl]);
+  }
 }

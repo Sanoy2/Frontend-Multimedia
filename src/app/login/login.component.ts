@@ -14,6 +14,12 @@ export class LoginComponent implements OnInit {
   constructor(private cookieService: CookieService, private service: LoginService, private router: Router) { }
 
   ngOnInit() {
+    let uuid = this.cookieService.get('uuid');
+    let username = this.cookieService.get('username');
+
+    if (uuid && username) {
+      setTimeout(() => { this.router.navigate(['/room']); }, 200);
+    }
   }
 
   login: string = '';
@@ -30,7 +36,7 @@ export class LoginComponent implements OnInit {
         if (response.ok === true) {
           this.cookieService.set('username', response.data.username);
           this.cookieService.set('uuid', response.data.uuid);
-          this.router.navigate(['/room'])
+          setTimeout(() => { this.router.navigate(['/room']); }, 200);
         }
         else {
           this.errMsg = response.error.message;
