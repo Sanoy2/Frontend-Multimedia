@@ -23,7 +23,7 @@ export class ChatService {
 
     GetMessages(room_gid: string, onSuccess, onError) {
         let uuid = this.cookieService.get('uuid');
-        let path: string = 'http://localhost:8000' + '/get-room-history?room_gid' + room_gid;
+        let path: string = 'http://localhost:8000' + '/get-room-history?room_gid=' + room_gid;
         this.http.get(path, this.GetHttpOptions(uuid)).subscribe(
             success => {
                 onSuccess(success)

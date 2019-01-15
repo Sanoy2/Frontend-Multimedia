@@ -15,10 +15,11 @@
 
 <ng-template #messageFromSomeone>
   <div class="d-flex justify-content-start mb-4">
-    <div class="img_cont_msg">
+    <!-- <div class="img_cont_msg">
       {{message.username}}
-    </div>
+    </div> -->
     <div class="msg_cotainer">
+      <b>{{message.username}}: </b><br />
       {{message.content}}
       content
       <span class="msg_time">
