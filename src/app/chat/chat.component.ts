@@ -10,6 +10,7 @@ import { MessageForm } from '../models/MessageForm';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
+
 export class ChatComponent implements OnInit {
 
   constructor(
@@ -21,7 +22,9 @@ export class ChatComponent implements OnInit {
   uuid: string = '';
   username: string = '';
   room_gid: string = '';
-  msg: string = '';
+  message: Message;
+  messageForm: MessageForm;
+  bunchOfMessages: Array<Message>;
   private sub: any;
 
   ngOnInit() {
@@ -40,8 +43,65 @@ export class ChatComponent implements OnInit {
     if (!this.room_gid) {
       this.router.navigate(['/room']);
     }
+
+    this.ClearInput();
+    this.bunchOfMessages = [];
+  }
+
+  Send() {
+    this.ClearInput();
+  }
+
+  GetMessages() {
+    for (let i = 0; i < 10; i++) {
+      let message = new Message();
+      message.content = this.MakeId();
+      message.username = '';
+      message.username = this.getUsername();
+      message.time = new Date();
+      this.bunchOfMessages.push(message);
+    }
   }
 
 
+  ClearInput() {
+    this.messageForm = new MessageForm();
+    this.messageForm.room_gid = this.room_gid;
+  }
 
+  getRandomInt() {
+    return Math.floor(Math.random() * Math.floor(10));
+  }
+
+  getSomething() {
+    let a: string = '';
+    for (let i = 0; i < 20; i++) {
+      a += i;
+    }
+    return a;
+  }
+
+  getRandomInt2() {
+    return Math.floor(Math.random() * Math.floor(2));
+  }
+
+  MakeId() {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (let i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
+  }
+
+  getUsername() {
+    let a = Math.floor(Math.random() * Math.floor(2));
+    if (a > 0) {
+      return 'abc';
+    }
+    else {
+      return 'theMan';
+    }
+  }
 }

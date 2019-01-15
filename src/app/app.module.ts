@@ -16,6 +16,7 @@ import { RegisterService } from './register/service/register.service';
 import { LoginService } from './login/service/login.service';
 import { RoomService } from './room/service/room.service';
 import { ChatService } from './chat/service/chat.service';
+import { MessageOnListComponent } from './message-on-list/message-on-list.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     ChatComponent,
     RoomComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MessageOnListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,29 @@
+<ng-container *ngIf="isMessageFromMe; then messageFromMe else messageFromSomeone">
+
+</ng-container>
+
+<ng-template #messageFromMe>
+  <div class="d-flex justify-content-end mb-4">
+    <div class="msg_cotainer_send">
+      {{message.content}}
+      <span class="msg_time_send">
+        {{message.time | date:'dd.MM.yy, HH:mm'}}
+      </span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #messageFromSomeone>
+  <div class="d-flex justify-content-start mb-4">
+    <div class="img_cont_msg">
+      {{message.username}}
+    </div>
+    <div class="msg_cotainer">
+      {{message.content}}
+      content
+      <span class="msg_time">
+        {{message.time | date:'dd.MM.yy, HH:mm'}}
+      </span>
+    </div>
+  </div>
+</ng-template>
