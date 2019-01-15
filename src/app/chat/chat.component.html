@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header msg_head">
     </div>
-    <div class="card-body msg_card_body">
+    <div class="card-body msg_card_body" #scrollMe>
       <ng-container *ngFor="let message of bunchOfMessages">
         <app-message-on-list [message]="message" [isMessageFromMe]="username === message.username"></app-message-on-list>
       </ng-container>

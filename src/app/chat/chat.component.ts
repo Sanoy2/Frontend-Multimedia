@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { ChatService } from './service/chat.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -11,8 +11,7 @@ import { MessageForm } from '../models/MessageForm';
   styleUrls: ['./chat.component.css']
 })
 
-export class ChatComponent implements OnInit {
-
+export class ChatComponent implements OnInit, AfterViewChecked {
   constructor(
     private service: ChatService,
     private cookieService: CookieService,
@@ -22,7 +21,6 @@ export class ChatComponent implements OnInit {
   uuid: string = '';
   username: string = '';
   room_gid: string = '';
-  message: Message;
   messageForm: MessageForm;
   bunchOfMessages: Array<Message>;
   errMsg: string = null;
@@ -47,6 +45,17 @@ export class ChatComponent implements OnInit {
 
     this.GetAllMessages();
     this.ClearInput();
+  }
+
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
   Send() {
@@ -75,7 +84,7 @@ export class ChatComponent implements OnInit {
     this.service.GetMessages(this.room_gid,
       response => {
         if (response.ok === true) {
-          for(let i = 0; i < response.data.length; i++) {
+          for (let i = 0; i < response.data.length; i++) {
             let message = new Message();
             message.username = response.data[i].sender.username;
             message.content = response.data[i].msg.txt;
@@ -107,7 +116,7 @@ export class ChatComponent implements OnInit {
   ClearInput() {
     this.messageForm = new MessageForm();
     this.messageForm.room_gid = this.room_gid;
-  }  
+  }
 
   RandomText() {
     let text = "";
