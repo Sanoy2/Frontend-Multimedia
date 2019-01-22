@@ -20,8 +20,11 @@ import { MessageOnListComponent } from './message-on-list/message-on-list.compon
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatSocketService } from './chat/service/chat.socketService';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule} from 'ngx-toastr';
 
-const config: SocketIoConfig = { url: 'http://localhost:2004', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} };
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -52,7 +55,13 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false } // <-- debugging purposes: true
     ),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      enableHtml: true,
+  }),
   ],
   providers: [
     CookieService,

@@ -4,6 +4,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Message } from '../models/message';
 import { MessageForm } from '../models/MessageForm';
+import { ChatSocketService } from './service/chat.socketService';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat',
@@ -16,20 +18,37 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private service: ChatService,
     private cookieService: CookieService,
     private router: Router,
-    private route: ActivatedRoute, ) { }
+    private route: ActivatedRoute,
+    private socket: ChatSocketService,
+    private toastr: ToastrService) {
+  }
 
   uuid: string = '';
   username: string = '';
   room_gid: string = '';
   messageForm: MessageForm;
-  bunchOfMessages: Array<Message>;
+  bunchOfMessages: Array<Message> = new Array();
   errMsg: string = null;
   private sub: any;
 
   ngOnInit() {
+    this.socket.listen('disconnect', () => {
+      console.log('disconnected');
+      this.socket.disconnect();
+      this.router.navigate(['/room'], { replaceUrl: true });
+    })
 
     this.sub = this.route.params.subscribe(params => {
       this.room_gid = params['room_gid'];
+      this.socket.emit(
+        'auth',
+        JSON.stringify(
+          {
+            uuid: this.cookieService.get('uuid'),
+            room_gid: this.room_gid,
+          }
+        ),
+        () => this.initListening());
     });
 
     this.uuid = this.cookieService.get('uuid');
@@ -46,6 +65,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.GetAllMessages();
     this.messageForm = new MessageForm();
     this.messageForm.room_gid = this.room_gid;
+  }
+
+  initListening(): void {
+    this.socket.listen('message', (data) => {
+      const message = new Message();
+      message.username = data.sender.username;
+      message.content = data.msg.txt;
+      message.time = new Date(data.msg.timestamp);
+      this.bunchOfMessages.push(message);
+      this.SortMessages();
+    });
+
+    this.socket.listen('join_room', (data) => {
+      this.toastr.success('User <b>' + data.user + '</b> joined channel', 'Notificication');
+    });
+
+    this.socket.listen('leave_room', (data) => {
+      this.toastr.warning('User <b>' + data.user + '</b> left channel', 'Notification');
+    });
   }
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
@@ -73,7 +111,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     )
     this.ClearInput();
-    this.GetAllMessages();
+    // this.GetAllMessages();
   }
 
   onKeydown(event) {

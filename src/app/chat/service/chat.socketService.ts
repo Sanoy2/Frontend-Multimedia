@@ -8,13 +8,38 @@ import { Socket } from 'ngx-socket-io';
 @Injectable()
 export class ChatSocketService {
 
+    connected = true;
+
     constructor(private socket: Socket) {
-        let a = this.socket.connect();
-        console.log(a);
+        if (!this.connected) {
+            this.socket.connect();
+            this.connected = true;
+        }
+
+    }
+
+    listen(event: string, fcn: Function) {
+        if (!this.connected) {
+            this.socket.connect();
+            this.connected = true;
+        }
+        this.socket.on(event, (msg: string) => {
+            fcn(msg);
+        });
     }
 
 
-    sendMessage(msg: string){
-        // this.socket.emit("message", msg);
+    emit(event: string, msg: string, callback?: Function) {
+        if (!this.connected) {
+            this.socket.connect();
+            this.connected = true;
+        }
+        this.socket.emit(event, msg, callback);
+    }
+
+    disconnect() {
+        this.socket.removeAllListeners();
+        this.socket.disconnect();
+        this.connected = false;
     }
 }

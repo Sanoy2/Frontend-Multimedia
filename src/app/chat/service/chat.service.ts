@@ -10,8 +10,7 @@ import { ChatSocketService } from './chat.socketService';
 export class ChatService {
 
     constructor(
-        private http: HttpClient, 
-        private socket: ChatSocketService,
+        private http: HttpClient,
         private cookieService: CookieService) {
             
     }
@@ -41,7 +40,7 @@ export class ChatService {
     SendMessage(messageForm: MessageForm, onSuccess, onError) {
         let uuid = this.cookieService.get('uuid');
         let path: string = 'http://localhost:8000/send-message';
-        this.socket.sendMessage("ss");
+        
         this.http.post(path, messageForm, this.GetHttpOptions(uuid)).subscribe(
             success => {
                 onSuccess(success)
