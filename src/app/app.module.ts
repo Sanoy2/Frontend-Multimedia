@@ -18,6 +18,11 @@ import { RoomService } from './room/service/room.service';
 import { ChatService } from './chat/service/chat.service';
 import { MessageOnListComponent } from './message-on-list/message-on-list.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ChatSocketService } from './chat/service/chat.socketService';
+
+const config: SocketIoConfig = { url: 'http://localhost:2004', options: {} };
+
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
@@ -42,6 +47,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    SocketIoModule.forRoot(config),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes: true
@@ -53,7 +59,8 @@ const appRoutes: Routes = [
     RegisterService,
     LoginService,
     RoomService,
-    ChatService],
+    ChatService,
+    ChatSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
