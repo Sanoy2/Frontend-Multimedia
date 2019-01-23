@@ -16,7 +16,7 @@ export class RoomComponent implements OnInit {
   ngOnInit() {
     this.uuid = this.cookieService.get('uuid');
     if (!this.uuid) {
-      this.errMsg = 'Log in to create rooms';
+      this.router.navigate(['/login']);
     }
   }
 

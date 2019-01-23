@@ -20,6 +20,10 @@ export class LoginComponent implements OnInit {
     if (uuid && username) {
       setTimeout(() => { this.router.navigate(['/room']); }, 200);
     }
+
+    setTimeout(() => { 
+      document.getElementById("login").focus();
+    }, 1);
   }
 
   login: string = '';
@@ -31,7 +35,7 @@ export class LoginComponent implements OnInit {
   Login() {
     this.form.login = this.login;
     this.form.password = this.password;
-    this.service.Register(this.form,
+    this.service.Login(this.form,
       response => {
         if (response.ok === true) {
           this.cookieService.set('username', response.data.username);
@@ -46,6 +50,12 @@ export class LoginComponent implements OnInit {
         this.errMsg = error.message;
       }
     )
+  }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.Login();
+    }
   }
 
 }

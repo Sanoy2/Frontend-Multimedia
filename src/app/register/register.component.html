@@ -1,8 +1,8 @@
 <app-my-navbar></app-my-navbar>
-<div class="login-page">
+<div class="login-page" (keydown)="onKeydown($event)">
   <div class="form">
     <div class="login-form">
-      <input type="text" placeholder="username" [(ngModel)]="username" />
+      <input type="text" id="username" placeholder="username" [(ngModel)]="username" />
       <input type="text" placeholder="login" [(ngModel)]="login" />
       <input type="password" placeholder="password" [(ngModel)]="password" />
       <input type="password" placeholder="retype password" [(ngModel)]="rePassword" />

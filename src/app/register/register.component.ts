@@ -13,6 +13,9 @@ export class RegisterComponent implements OnInit {
   constructor(private service: RegisterService, private router: Router) { }
 
   ngOnInit() {
+    setTimeout(() => { 
+      document.getElementById("username").focus();
+    }, 1);
   }
 
   form = new RegistrationForm();
@@ -40,5 +43,11 @@ export class RegisterComponent implements OnInit {
         this.errMsg = error.message;
       }
     )
+  }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.Register();
+    }
   }
 }
