@@ -38,21 +38,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.router.navigate(['/room'], { replaceUrl: true });
     })
 
+    this.uuid = this.cookieService.get('uuid');
+    this.username = this.cookieService.get('username');
+
     this.sub = this.route.params.subscribe(params => {
       this.room_gid = params['room_gid'];
       this.socket.emit(
         'auth',
         JSON.stringify(
           {
-            uuid: this.cookieService.get('uuid'),
-            room_gid: this.room_gid,
+            uuid: this.uuid,
+            room_gid: this.room_gid
           }
         ),
         () => this.initListening());
     });
-
-    this.uuid = this.cookieService.get('uuid');
-    this.username = this.cookieService.get('username');
 
     if (!this.uuid && !this.username) {
       this.router.navigate(['/login']);
@@ -111,7 +111,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     )
     this.ClearInput();
-    // this.GetAllMessages();
   }
 
   onKeydown(event) {

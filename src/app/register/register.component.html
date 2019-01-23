@@ -8,7 +8,7 @@
       <input type="password" placeholder="retype password" [(ngModel)]="rePassword" />
       <p *ngIf="errMsg !== null" style="color: red;font-size: 12px;">{{errMsg}}</p>
       <button (click)="Register()">register</button>
-      <p class="message">Already registered? <a class="nav-link" routerLink="/Login" routerLinkActive="active">Sign in</a></p>
+      <p class="message">Already registered? <a class="nav-link" routerLink="/login" routerLinkActive="active">Sign in</a></p>
     </div>
   </div>
 </div>
