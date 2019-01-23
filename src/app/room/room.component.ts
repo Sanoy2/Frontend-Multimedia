@@ -30,7 +30,8 @@ export class RoomComponent implements OnInit {
         if (response.ok) {
           let room_gid: string = response.data.room_gid;
           this.cookieService.set(room_gid, response.data.room_gid);
-          this.router.navigate(['/chat/' + room_gid]);
+          // this.router.navigate(['/chat/' + room_gid], {re});
+          this.router.navigateByUrl('/chat/' + room_gid, {});
         }
         else {
           this.errMsg = response.error.message;

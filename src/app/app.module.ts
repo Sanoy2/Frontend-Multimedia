@@ -18,6 +18,14 @@ import { RoomService } from './room/service/room.service';
 import { ChatService } from './chat/service/chat.service';
 import { MessageOnListComponent } from './message-on-list/message-on-list.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ChatSocketService } from './chat/service/chat.socketService';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule} from 'ngx-toastr';
+
+const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} };
+
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
@@ -42,18 +50,26 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    SocketIoModule.forRoot(config),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes: true
     ),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      enableHtml: true,
+  }),
   ],
   providers: [
     CookieService,
     RegisterService,
     LoginService,
     RoomService,
-    ChatService],
+    ChatService,
+    ChatSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
