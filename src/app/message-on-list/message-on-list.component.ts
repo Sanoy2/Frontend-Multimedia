@@ -14,10 +14,17 @@ export class MessageOnListComponent implements OnInit {
   @Input()
   isMessageFromMe: boolean;
 
+  showTime: boolean;
+
   constructor() { }
 
   ngOnInit() {
+    this.showTime = false;
+  }
 
+  messageClicked() {
+    this.showTime = !this.showTime;
+    console.log("clicked");
   }
 
 }

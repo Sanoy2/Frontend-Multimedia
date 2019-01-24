@@ -3,10 +3,10 @@
 </ng-container>
 
 <ng-template #messageFromMe>
-  <div class="d-flex justify-content-end mb-4">
+  <div class="d-flex justify-content-end mb-3" (click)="messageClicked()">
     <div class="msg_cotainer_send">
       {{message.content}}
-      <span class="msg_time_send">
+        <span [ngClass]="{'msg_time_send': showTime, 'hidden': !showTime}">
         {{message.time | date:'dd.MM.yy, HH:mm'}}
       </span>
     </div>
@@ -14,14 +14,11 @@
 </ng-template>
 
 <ng-template #messageFromSomeone>
-  <div class="d-flex justify-content-start mb-4">
-    <!-- <div class="img_cont_msg">
-      {{message.username}}
-    </div> -->
+  <div class="d-flex justify-content-start mb-3" (click)="messageClicked()">
     <div class="msg_cotainer">
       <b>{{message.username}}: </b><br />
       {{message.content}}
-      <span class="msg_time">
+      <span [ngClass]="{'msg_time': showTime, 'hidden': !showTime}">
         {{message.time | date:'dd.MM.yy, HH:mm'}}
       </span>
     </div>

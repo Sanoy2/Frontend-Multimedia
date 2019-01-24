@@ -11,6 +11,12 @@
   position: relative;
 }
 
+.hidden {
+  display: none;
+  /* height: 0px;
+  width: 0px; */
+}
+
 .msg_time_send {
   position: absolute;
   right: 0;
@@ -42,4 +48,3 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: 10px;
 }
-
