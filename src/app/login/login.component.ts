@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginForm } from '../models/LoginForm';
 import { LoginService } from './service/login.service'
 import { Router } from '@angular/router';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => { this.router.navigate(['/room']); }, 200);
     }
 
-    setTimeout(() => { 
+    setTimeout(() => {
       document.getElementById("login").focus();
     }, 1);
   }
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   Login() {
     this.form.login = this.login;
-    this.form.password = this.password;
+    this.form.password = Md5.hashStr(this.password) as string;
     this.service.Login(this.form,
       response => {
         if (response.ok === true) {

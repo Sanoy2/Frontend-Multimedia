@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrationForm } from '../models/RegistrationForm';
 import { RegisterService } from './service/register.service';
 import { Router } from "@angular/router";
+import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent implements OnInit {
   Register() {
     this.form.login = this.login;
     this.form.username = this.username;
-    this.form.password = this.password;
+    this.form.password =  Md5.hashStr(this.password) as string;
     this.service.Register(this.form,
       response => {
         if (response.ok === true) {
