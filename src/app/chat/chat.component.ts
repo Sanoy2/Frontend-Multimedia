@@ -72,7 +72,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       const message = new Message();
       message.username = data.sender.username;
       message.content = data.msg.txt;
-      message.time = new Date(data.msg.timestamp);
+      message.time = this.CreateDate(data.msg.timestamp);
       this.bunchOfMessages.push(message);
       this.SortMessages();
     });
@@ -128,7 +128,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             let message = new Message();
             message.username = response.data[i].sender.username;
             message.content = response.data[i].msg.txt;
-            message.time = new Date(response.data[i].msg.timestamp);
+            message.time = this.CreateDate(response.data[i].msg.timestamp);
             this.bunchOfMessages.push(message);
           }
           this.SortMessages();
@@ -156,5 +156,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.messageForm = new MessageForm();
       this.messageForm.room_gid = this.room_gid;
     }, 50);
+  }
+
+  CreateDate(timestamp: number): Date {
+    return new Date(timestamp * 1000);
   }
 }
