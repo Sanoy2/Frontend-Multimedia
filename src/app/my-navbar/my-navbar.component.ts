@@ -27,6 +27,8 @@ export class MyNavbarComponent implements OnInit {
   Logout() {
     this.loggedIn = false;
     this.cookieService.deleteAll();
+    this.cookieService.delete('uuid');
+    this.cookieService.delete('username');
 
     setTimeout(() => { this.router.navigate(['/login']); }, 500);
   }
