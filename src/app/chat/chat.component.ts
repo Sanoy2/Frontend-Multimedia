@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   bunchOfMessages: Array<Message> = new Array();
   errMsg: string = null;
   private sub: any;
+  private newMsg = false;
 
   ngOnInit() {
     this.socket.listen('disconnect', () => {
@@ -74,6 +75,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       message.content = data.msg.txt;
       message.time = this.CreateDate(data.msg.timestamp);
       this.bunchOfMessages.push(message);
+      this.newMsg = true;
       this.SortMessages();
     });
 
@@ -88,7 +90,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   ngAfterViewChecked(): void {
-    this.ScrollToBottom();
+    if (this.newMsg) {
+      this.ScrollToBottom();
+      this.newMsg = false;
+    }
   }
 
   ScrollToBottom(): void {
@@ -130,6 +135,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             message.content = response.data[i].msg.txt;
             message.time = this.CreateDate(response.data[i].msg.timestamp);
             this.bunchOfMessages.push(message);
+            this.newMsg = true;
           }
           this.SortMessages();
         }
